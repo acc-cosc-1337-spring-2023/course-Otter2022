@@ -9,7 +9,7 @@ int add_numbers(int num1, int num2)
 //write function code here
 double get_sales_tax_amount(double meal_amount)
 {
-	const double tax_rate = .0625;
+	const double tax_rate = .0675;
 	return meal_amount * tax_rate;
 }
 
