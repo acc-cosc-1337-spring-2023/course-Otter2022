@@ -16,11 +16,12 @@ double get_gc_content(const string &dna){
 }
 
 string reverse_string(string dna){
-    auto length = dna.size();
+    int length = dna.size();
     string reverse = dna;
     int counter = 0;
-    for (auto i = (length-1); i >= 0; i--){
-        reverse[counter] = dna[length];
+    for (int i = (length-1); i >= 0; i--){
+        reverse[counter] = dna[i];
+        counter++;
     }
     return reverse;
 }
@@ -29,13 +30,16 @@ string get_dna_complement(string dna){
     string reverse = reverse_string(dna);
     for(char &ch: reverse){
         if(ch == 'G'){
-            ch = 'T';
-        } if(ch == 'T'){
-            ch = 'G';
-        } if(ch == 'C'){
-            ch = 'A';
-        } if(ch == 'A'){
             ch = 'C';
+        } 
+        else if(ch == 'T'){
+            ch = 'A';
+        } 
+        else if(ch == 'C'){
+            ch = 'G';
+        } 
+        else if(ch == 'A'){
+            ch = 'T';
         } 
     }
     return reverse;

@@ -2,10 +2,6 @@
 #include "catch.hpp"
 #include "func.h"
 
-TEST_CASE("Verify Test Configuration", "verification") {
-	REQUIRE(true == true);
-}
-
 TEST_CASE("verify get_gc_content"){
 	REQUIRE(get_gc_content("AGCTATAG") == .375);
 	REQUIRE(get_gc_content("CGCTATAG") == .5);
