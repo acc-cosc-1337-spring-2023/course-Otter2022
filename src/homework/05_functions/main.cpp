@@ -7,8 +7,12 @@ and display them to screen.
 Program continues until user decides to exit.
 
 */
+#include "func.h"
+#include<iostream>
+using std::cout;
+
 int main() 
 {
-
+	cout<<get_dna_complement("ABF")<<"\n";
 	return 0;
 }
