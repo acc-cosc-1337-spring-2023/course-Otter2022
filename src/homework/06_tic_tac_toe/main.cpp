@@ -13,8 +13,9 @@ int main()
 
 	while(cont == "Y"){
 		int position;
-		cout<<"Enter a Position(between 0 and 8): "<<"\n";
+		cout<<"Enter a Position(between 1 and 9): "<<"\n";
 		cin>>position;
+		position--;
 		game.mark_board(position);
 		game.display_board();
 		if(game.game_over()==true){
