@@ -10,8 +10,18 @@ using std::vector;
 
 class TicTacToe {
     public:
-        bool game_over(){return check_board_full();}
+        bool game_over(){
+            if(check_board_full() || check_row_win() || check_column_win() || check_diagonal_win()){
+                if(check_row_win() || check_column_win() || check_diagonal_win()){
+                    set_winner();
+                }
+                return true;
+            } else {
+                return false;
+            }
+        }
         void start_game(string First_player){
+            winner = "C";
             while(!(First_player == "X" || First_player == "O")){
                 cout<<"*invalid input* Please enter X or O: ";
                 cin>>First_player;
@@ -34,7 +44,59 @@ class TicTacToe {
                 }
             }
         }
+        string get_winner() {return winner;}
     private:
+        bool check_column_win() {
+            if (string_pegs[0]=="X"&&string_pegs[3]=="X"&&string_pegs[6]=="X"){
+                return true;
+            } else if (string_pegs[1]=="X"&&string_pegs[4]=="X"&&string_pegs[7]=="X"){
+                return true;
+            } else if (string_pegs[2]=="X"&&string_pegs[5]=="X"&&string_pegs[8]=="X"){
+                return true;
+            } else if (string_pegs[0]=="O"&&string_pegs[3]=="O"&&string_pegs[6]=="O"){
+                return true;
+            } else if (string_pegs[1]=="O"&&string_pegs[4]=="O"&&string_pegs[7]=="O"){
+                return true;
+            } else if (string_pegs[2]=="O"&&string_pegs[5]=="O"&&string_pegs[8]=="O"){
+                return true;
+            }
+            return false;
+        }
+        bool check_row_win() {
+            if (string_pegs[0]=="X"&&string_pegs[1]=="X"&&string_pegs[2]=="X"){
+                return true;
+            } else if (string_pegs[3]=="X"&&string_pegs[4]=="X"&&string_pegs[5]=="X"){
+                return true;
+            } else if (string_pegs[6]=="X"&&string_pegs[7]=="X"&&string_pegs[8]=="X"){
+                return true;
+            } else if (string_pegs[0]=="O"&&string_pegs[1]=="O"&&string_pegs[2]=="O"){
+                return true;
+            } else if (string_pegs[3]=="O"&&string_pegs[4]=="O"&&string_pegs[5]=="O"){
+                return true;
+            } else if (string_pegs[6]=="O"&&string_pegs[7]=="O"&&string_pegs[8]=="O"){
+                return true;
+            }
+            return false;
+        }
+        bool check_diagonal_win() {
+            if (string_pegs[0]=="X"&&string_pegs[4]=="X"&&string_pegs[8]=="X"){
+                return true;
+            } else if (string_pegs[6]=="X"&&string_pegs[4]=="X"&&string_pegs[2]=="X"){
+                return true;
+            } else if (string_pegs[0]=="O"&&string_pegs[4]=="O"&&string_pegs[8]=="O"){
+                return true;
+            } else if (string_pegs[6]=="O"&&string_pegs[4]=="O"&&string_pegs[2]=="O"){
+                return true;
+            }
+            return false;
+        }
+        void set_winner() {
+            if (player == "X"){
+                winner = "O";
+            } else {
+                winner = "X";
+            }
+        }
         void set_next_player(){
             if (player == "X"){
                 player = "O";
@@ -60,4 +122,5 @@ class TicTacToe {
         }
         string player;
         vector<string> string_pegs{" ", " ", " ", " ", " ", " ", " ", " ", " "};
+        string winner = "C";
 };

@@ -20,6 +20,7 @@ int main()
 		game.display_board();
 		if(game.game_over()==true){
 			cout<<"game over"<<"\n";
+			cout<<"The winner is "<<game.get_winner()<<"\n";
 			cout<<"Enter Y to play again: "<<"\n";
 			cin>>cont;
 			if(cont == "Y"){
