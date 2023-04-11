@@ -2,14 +2,35 @@
 #include <string>
 #include <iostream>
 #include <vector>
+// #include "tic_tac_toe_manager.h"
 using std::string;
 using std::cout;
 using std::cin;
 using std::vector;
+using std::ostream;
+using std::istream;
 
 
-class TicTacToe {
+class TicTacToe{
+
     public:
+        friend istream& operator>>(istream& in, TicTacToe& game){
+            int position;
+            in >> position;
+            game.mark_board(position);
+            return in;
+            }
+        friend ostream& operator<<(ostream& out, const TicTacToe& game){
+            for(int i = 0; i < game.string_pegs.size(); i++){
+                out << game.string_pegs[i];
+                if(i == 0 || i == 1 || i == 3 || i == 4 || i == 6 || i == 7){
+                    out << "|";
+                } else {
+                    out << "\n";
+                }
+            }
+            return out;
+        }
         bool game_over(){
             if(check_board_full() || check_row_win() || check_column_win() || check_diagonal_win()){
                 if(check_row_win() || check_column_win() || check_diagonal_win()){
@@ -34,16 +55,16 @@ class TicTacToe {
             set_next_player();
         }
         string get_player() const{return player;}
-        void display_board() const{
-            for(int i = 0; i < string_pegs.size(); i++){
-                cout<<string_pegs[i];
-                if(i == 0 || i == 1 || i == 3 || i == 4 || i == 6 || i == 7){
-                    cout<<"|";
-                } else {
-                    cout<<"\n";
-                }
-            }
-        }
+        // void display_board() const{
+        //     for(int i = 0; i < string_pegs.size(); i++){
+        //         cout<<string_pegs[i];
+        //         if(i == 0 || i == 1 || i == 3 || i == 4 || i == 6 || i == 7){
+        //             cout<<"|";
+        //         } else {
+        //             cout<<"\n";
+        //         }
+        //     }
+        // }
         string get_winner() {return winner;}
     private:
         bool check_column_win() {
