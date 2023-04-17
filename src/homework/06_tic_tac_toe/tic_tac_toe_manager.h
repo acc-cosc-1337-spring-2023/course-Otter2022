@@ -1,18 +1,21 @@
 //h
 #include "tic_tac_toe.h"
+#include <memory>
+using std::unique_ptr;
+using std::move;
 
 class TicTacToeManager{
     public:
-    void save_game(TicTacToe b){
-        string winner = b.get_winner();
+    void save_game(unique_ptr<TicTacToe> b){
+        string winner = b->get_winner();
         update_winner_count(winner);
-        games.push_back(b);
+        games.push_back(move(b));
     }
     friend ostream& operator<<(ostream & out, const TicTacToeManager &manager){
         //cpp
-        for (auto game : manager.games)
+        for (auto& game : manager.games)
         {
-            out << game << "\n";
+            out << *game << "\n";
         }
         out << "X wins: " << manager.x_win << "\n";
         out << "O wins: " << manager.o_win << "\n";
@@ -26,7 +29,7 @@ class TicTacToeManager{
     }
     
     private:
-    vector<TicTacToe> games{};
+    vector<unique_ptr<TicTacToe>> games{};
     int x_win = 0;
     int o_win = 0;
     int ties = 0;

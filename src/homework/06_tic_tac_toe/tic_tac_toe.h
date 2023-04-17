@@ -14,6 +14,7 @@ using std::istream;
 class TicTacToe{
 
     public:
+        TicTacToe(int size) : pegs(size * size, " ") {};
         friend istream& operator>>(istream& in, TicTacToe& game){
             int position;
             in >> position;
@@ -21,9 +22,10 @@ class TicTacToe{
             return in;
             }
         friend ostream& operator<<(ostream& out, const TicTacToe& game){
-            for(int i = 0; i < game.string_pegs.size(); i++){
-                out << game.string_pegs[i];
-                if(i == 0 || i == 1 || i == 3 || i == 4 || i == 6 || i == 7){
+            int size = game.pegs.size();
+            for(int i = 0; i < game.pegs.size(); i++){
+                out << game.pegs[i];
+                if((size==16&&(i+1)%4==0)||(size==9&&(i+1)%3==0)){
                     out << "|";
                 } else {
                     out << "\n";
@@ -51,7 +53,7 @@ class TicTacToe{
             clear_board();
         }
         void mark_board(int position){
-            string_pegs[position] = player;
+            pegs[position] = player;
             set_next_player();
         }
         string get_player() const{return player;}
@@ -66,51 +68,63 @@ class TicTacToe{
         //     }
         // }
         string get_winner() {return winner;}
+    protected:
+        virtual bool check_column_win(){
+            return false;
+        };
+        virtual bool check_row_win(){
+            return false;
+        };
+        virtual bool check_diagonal_win(){
+            return false;
+        };
+        
+        std::vector<std::string> pegs;
     private:
-        bool check_column_win() {
-            if (string_pegs[0]=="X"&&string_pegs[3]=="X"&&string_pegs[6]=="X"){
-                return true;
-            } else if (string_pegs[1]=="X"&&string_pegs[4]=="X"&&string_pegs[7]=="X"){
-                return true;
-            } else if (string_pegs[2]=="X"&&string_pegs[5]=="X"&&string_pegs[8]=="X"){
-                return true;
-            } else if (string_pegs[0]=="O"&&string_pegs[3]=="O"&&string_pegs[6]=="O"){
-                return true;
-            } else if (string_pegs[1]=="O"&&string_pegs[4]=="O"&&string_pegs[7]=="O"){
-                return true;
-            } else if (string_pegs[2]=="O"&&string_pegs[5]=="O"&&string_pegs[8]=="O"){
-                return true;
-            }
-            return false;
-        }
-        bool check_row_win() {
-            if (string_pegs[0]=="X"&&string_pegs[1]=="X"&&string_pegs[2]=="X"){
-                return true;
-            } else if (string_pegs[3]=="X"&&string_pegs[4]=="X"&&string_pegs[5]=="X"){
-                return true;
-            } else if (string_pegs[6]=="X"&&string_pegs[7]=="X"&&string_pegs[8]=="X"){
-                return true;
-            } else if (string_pegs[0]=="O"&&string_pegs[1]=="O"&&string_pegs[2]=="O"){
-                return true;
-            } else if (string_pegs[3]=="O"&&string_pegs[4]=="O"&&string_pegs[5]=="O"){
-                return true;
-            } else if (string_pegs[6]=="O"&&string_pegs[7]=="O"&&string_pegs[8]=="O"){
-                return true;
-            }
-            return false;
-        }
-        bool check_diagonal_win() {
-            if (string_pegs[0]=="X"&&string_pegs[4]=="X"&&string_pegs[8]=="X"){
-                return true;
-            } else if (string_pegs[6]=="X"&&string_pegs[4]=="X"&&string_pegs[2]=="X"){
-                return true;
-            } else if (string_pegs[0]=="O"&&string_pegs[4]=="O"&&string_pegs[8]=="O"){
-                return true;
-            } else if (string_pegs[6]=="O"&&string_pegs[4]=="O"&&string_pegs[2]=="O"){
-                return true;
-            }
-            return false;
-        }
+        // bool check_column_win() {
+        // //     if (string_pegs[0]=="X"&&string_pegs[3]=="X"&&string_pegs[6]=="X"){
+        // //         return true;
+        // //     } else if (string_pegs[1]=="X"&&string_pegs[4]=="X"&&string_pegs[7]=="X"){
+        // //         return true;
+        // //     } else if (string_pegs[2]=="X"&&string_pegs[5]=="X"&&string_pegs[8]=="X"){
+        // //         return true;
+        // //     } else if (string_pegs[0]=="O"&&string_pegs[3]=="O"&&string_pegs[6]=="O"){
+        // //         return true;
+        // //     } else if (string_pegs[1]=="O"&&string_pegs[4]=="O"&&string_pegs[7]=="O"){
+        // //         return true;
+        // //     } else if (string_pegs[2]=="O"&&string_pegs[5]=="O"&&string_pegs[8]=="O"){
+        // //         return true;
+        // //     }
+        //     return false;
+        // }
+        // bool check_row_win() {
+        // //     if (string_pegs[0]=="X"&&string_pegs[1]=="X"&&string_pegs[2]=="X"){
+        // //         return true;
+        // //     } else if (string_pegs[3]=="X"&&string_pegs[4]=="X"&&string_pegs[5]=="X"){
+        // //         return true;
+        // //     } else if (string_pegs[6]=="X"&&string_pegs[7]=="X"&&string_pegs[8]=="X"){
+        // //         return true;
+        // //     } else if (string_pegs[0]=="O"&&string_pegs[1]=="O"&&string_pegs[2]=="O"){
+        // //         return true;
+        // //     } else if (string_pegs[3]=="O"&&string_pegs[4]=="O"&&string_pegs[5]=="O"){
+        // //         return true;
+        // //     } else if (string_pegs[6]=="O"&&string_pegs[7]=="O"&&string_pegs[8]=="O"){
+        // //         return true;
+        // //     }
+        //     return false;
+        // }
+        //  bool check_diagonal_win() {
+        // //     if (string_pegs[0]=="X"&&string_pegs[4]=="X"&&string_pegs[8]=="X"){
+        // //         return true;
+        // //     } else if (string_pegs[6]=="X"&&string_pegs[4]=="X"&&string_pegs[2]=="X"){
+        // //         return true;
+        // //     } else if (string_pegs[0]=="O"&&string_pegs[4]=="O"&&string_pegs[8]=="O"){
+        // //         return true;
+        // //     } else if (string_pegs[6]=="O"&&string_pegs[4]=="O"&&string_pegs[2]=="O"){
+        // //         return true;
+        // //     }
+        //     return false;
+        // }
         void set_winner() {
             if (player == "X"){
                 winner = "O";
@@ -126,22 +140,23 @@ class TicTacToe{
             }
         }
         bool check_board_full(){
+            int size = pegs.size();
             int counter = 0;
-            for(int i = string_pegs.size()-1; i >= 0; i--){
-                if(!(string_pegs[i] == " ")) {
+            for(int i = pegs.size()-1; i >= 0; i--){
+                if(!(pegs[i] == " ")) {
                     counter++;
                 } 
             }
-            if(counter==9){
+            if(counter==size){
                 return true;
             } else {
                 return false;
             }
         }
         void clear_board(){
-            for(int i = string_pegs.size()-1; i >= 0; i--) string_pegs[i] = " ";
+            for(int i = pegs.size()-1; i >= 0; i--) pegs[i] = " ";
         }
         string player;
-        vector<string> string_pegs{" ", " ", " ", " ", " ", " ", " ", " ", " "};
+        //vector<string> string_pegs{" ", " ", " ", " ", " ", " ", " ", " ", " "};
         string winner = "C";
 };
