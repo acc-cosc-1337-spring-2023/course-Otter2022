@@ -4,6 +4,7 @@
 class TicTacToe4 : public TicTacToe {
 public:
     TicTacToe4() : TicTacToe(4) {}
+    virtual ~TicTacToe4() {}
 
 private:
     bool check_column_win() override{

@@ -14,6 +14,7 @@ using std::istream;
 class TicTacToe{
 
     public:
+        virtual ~TicTacToe() {} 
         TicTacToe(int size) : pegs(size * size, " ") {};
         friend istream& operator>>(istream& in, TicTacToe& game){
             int position;
@@ -26,9 +27,9 @@ class TicTacToe{
             for(int i = 0; i < game.pegs.size(); i++){
                 out << game.pegs[i];
                 if((size==16&&(i+1)%4==0)||(size==9&&(i+1)%3==0)){
-                    out << "|";
-                } else {
                     out << "\n";
+                } else {
+                    out << "|";
                 }
             }
             return out;
