@@ -1,11 +1,18 @@
 //h
-#include "tic_tac_toe_3.h"
+#include "tic_tac_toe_data.h"
 #include <memory>
 using std::unique_ptr;
 using std::move;
 
 class TicTacToeManager{
     public:
+    TicTacToeManager() = default;
+    TicTacToeManager(TicTacToeData& data) : data(data) {
+        games = data.get_games();
+        for (const auto& game : games) {
+            update_winner_count(game->get_winner());
+        }
+    }
     void save_game(unique_ptr<TicTacToe>& b){
         string winner = b->get_winner();
         update_winner_count(winner);
@@ -26,12 +33,16 @@ class TicTacToeManager{
         o = o_win;
         t = ties;
     }
+    ~TicTacToeManager() {
+        data.save_games(games);
+    }
     
     private:
     vector<unique_ptr<TicTacToe>> games{};
     int x_win = 0;
     int o_win = 0;
     int ties = 0;
+    TicTacToeData data;
 
     void update_winner_count(string winner){
         if (winner == "X"){

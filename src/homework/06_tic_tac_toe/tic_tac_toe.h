@@ -15,6 +15,7 @@ class TicTacToe{
 
     public:
         virtual ~TicTacToe() {} 
+        TicTacToe(std::vector<string> p, string win) : pegs(p), winner(win) {}
         TicTacToe(int size) : pegs(size * size, " ") {};
         friend istream& operator>>(istream& in, TicTacToe& game){
             int position;
@@ -69,6 +70,7 @@ class TicTacToe{
         //     }
         // }
         string get_winner() {return winner;}
+        const std::vector<std::string>& get_pegs() const { return pegs; }
     protected:
         virtual bool check_column_win(){
             return false;

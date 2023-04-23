@@ -4,7 +4,8 @@ using std::make_unique;
 
 int main()
 {
-    TicTacToeManager manager;
+    TicTacToeData data;
+    TicTacToeManager manager(data);
     string player;
     string cont = "Y";
     unique_ptr<TicTacToe> game;

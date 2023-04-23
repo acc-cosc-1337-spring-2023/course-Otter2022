@@ -3,6 +3,7 @@
 
 class TicTacToe3 : public TicTacToe {
 public:
+    TicTacToe3(std::vector<string> p, string winner) : TicTacToe(p, winner) {}
     TicTacToe3() : TicTacToe(3) {}
     virtual ~TicTacToe3() {} 
 
